@@ -27,6 +27,8 @@
 		E6C1456A2A5D9202008825AD /* BeerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C145692A5D9202008825AD /* BeerListViewController.swift */; };
 		E6C1456C2A5D9210008825AD /* BeerListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C1456B2A5D9210008825AD /* BeerListViewModel.swift */; };
 		E6C1456E2A5D9253008825AD /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C1456D2A5D9253008825AD /* SectionModel.swift */; };
+		E6C145712A5DA72E008825AD /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C145702A5DA72E008825AD /* NetworkManager.swift */; };
+		E6C145732A5DB2DC008825AD /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C145722A5DB2DC008825AD /* APIClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,8 @@
 		E6C145692A5D9202008825AD /* BeerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerListViewController.swift; sourceTree = "<group>"; };
 		E6C1456B2A5D9210008825AD /* BeerListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerListViewModel.swift; sourceTree = "<group>"; };
 		E6C1456D2A5D9253008825AD /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
+		E6C145702A5DA72E008825AD /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		E6C145722A5DB2DC008825AD /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +190,7 @@
 		E6C145492A5D83AB008825AD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E6C1456F2A5DA71A008825AD /* NetworkLayer */,
 				E6C1455D2A5D88C6008825AD /* DataModel */,
 				E6C145562A5D83D3008825AD /* Entity */,
 				E6C145552A5D83C5008825AD /* Router */,
@@ -297,6 +302,15 @@
 			children = (
 			);
 			path = Root;
+			sourceTree = "<group>";
+		};
+		E6C1456F2A5DA71A008825AD /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+				E6C145702A5DA72E008825AD /* NetworkManager.swift */,
+				E6C145722A5DB2DC008825AD /* APIClient.swift */,
+			);
+			path = NetworkLayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -506,8 +520,10 @@
 			files = (
 				E6C145582A5D83DD008825AD /* Beer.swift in Sources */,
 				E6C1455F2A5D88DA008825AD /* DataModel.swift in Sources */,
+				E6C145712A5DA72E008825AD /* NetworkManager.swift in Sources */,
 				E6C1455C2A5D83F3008825AD /* Beer+API.swift in Sources */,
 				E6C1455A2A5D83E5008825AD /* BeerRouter.swift in Sources */,
+				E6C145732A5DB2DC008825AD /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,4 +9,19 @@ import Foundation
 
 enum BeerRouter {
     case fetchBeerData
+    
+    
+    var path: String {
+        switch self {
+        case .fetchBeerData:
+            return "beers"
+        }
+    }
+    
+    var params: [String: Any] {
+        switch self {
+        case .fetchBeerData:
+            return [:]
+        }
+    }
 }

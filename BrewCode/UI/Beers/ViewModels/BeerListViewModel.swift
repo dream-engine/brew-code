@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Model
 
 protocol BeerListViewModelProtocol: AnyObject {
     func reload()
@@ -13,6 +14,9 @@ protocol BeerListViewModelProtocol: AnyObject {
 
 class BeerListViewModel {
     weak var view: BeerListViewModelProtocol?
+    
+    // Data
+    var beers: [Beer] = []
     
     init(view: BeerListViewModelProtocol) {
         self.view = view
@@ -22,11 +26,22 @@ class BeerListViewModel {
 // MARK: Helper Functions
 extension BeerListViewModel {
     private func prepareCellModels() {
-        
+        print(beers)
     }
 }
 
 // MARK: BeerListViewControllerProtocol
 extension BeerListViewModel: BeerListViewControllerProtocol {
-    
+    func fetchBeers() {
+        Beer.getBeers { [weak self] (beers, error) in
+            guard let self = self else { return }
+            
+            if let beers {
+                self.beers = beers
+                self.prepareCellModels()
+            } else {
+                // Handle error
+            }
+        }
+    }
 }

@@ -9,6 +9,12 @@ import UIKit
 
 protocol BeerListViewControllerProtocol {
     
+    func item(atIndexPath indexPath: IndexPath) -> Any
+    func numberOfRows(inSection section: Int) -> Int
+    var numberOfSections: Int { get }
+    
+    
+    func fetchBeers()
 }
 
 /// BeerListViewController
@@ -27,7 +33,9 @@ class BeerListViewController: UIViewController {
     // MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupCollectionView()
         self.setupViewModel()
+        self.viewModel.fetchBeers()
     }
 
 }
@@ -40,6 +48,11 @@ extension BeerListViewController {
         self.viewModel = BeerListViewModel(view: self)
     }
     
+    private func setupCollectionView() {
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+    }
+    
 }
 
 // MARK: BeerListViewModelProtocol
@@ -48,4 +61,27 @@ extension BeerListViewController: BeerListViewModelProtocol {
     func reload() {
         self.collectionView.reloadData()
     }
+}
+
+// MARK: UICollectionViewDelegate
+extension BeerListViewController: UICollectionViewDelegate {
+    
+}
+
+// MARK: UICollectionViewDataSource
+extension BeerListViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return self.viewModel.numberOfSections
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.viewModel.numberOfRows(inSection: section)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+    
+    
 }
