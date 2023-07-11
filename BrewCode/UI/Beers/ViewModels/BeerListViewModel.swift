@@ -15,6 +15,8 @@ protocol BeerListViewModelProtocol: AnyObject {
 class BeerListViewModel {
     weak var view: BeerListViewModelProtocol?
     
+    var sectionModels: [SectionModel] = []
+    
     // Data
     var beers: [Beer] = []
     
@@ -43,5 +45,17 @@ extension BeerListViewModel: BeerListViewControllerProtocol {
                 // Handle error
             }
         }
+    }
+    
+    var numberOfSections: Int {
+        return self.sectionModels.count
+    }
+    
+    func numberOfRows(inSection section: Int) -> Int {
+        return self.sectionModels[section].cellModels.count
+    }
+    
+    func item(atIndexPath indexPath: IndexPath) -> Any {
+        return self.sectionModels[indexPath.section].cellModels[indexPath.row]
     }
 }
