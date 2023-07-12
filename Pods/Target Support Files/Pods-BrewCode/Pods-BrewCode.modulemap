@@ -1,0 +1,6 @@
+framework module Pods_BrewCode {
+  umbrella header "Pods-BrewCode-umbrella.h"
+
+  export *
+  module * { export * }
+}
