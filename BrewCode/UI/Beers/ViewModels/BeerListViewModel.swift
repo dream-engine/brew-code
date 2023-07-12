@@ -28,7 +28,13 @@ class BeerListViewModel {
 // MARK: Helper Functions
 extension BeerListViewModel {
     private func prepareCellModels() {
-        print(beers)
+        self.sectionModels = []
+        
+        let beerListCellModels = self.beers.map({ BeerListCellModel(beer: $0)})
+        
+        self.sectionModels = [SectionModel(cellModels: beerListCellModels)]
+        
+        self.view?.reload()
     }
 }
 

@@ -8,11 +8,10 @@
 import UIKit
 
 protocol BeerListViewControllerProtocol {
-    
+    // CollectionView Data
     func item(atIndexPath indexPath: IndexPath) -> Any
     func numberOfRows(inSection section: Int) -> Int
     var numberOfSections: Int { get }
-    
     
     func fetchBeers()
 }
@@ -22,7 +21,7 @@ protocol BeerListViewControllerProtocol {
 class BeerListViewController: UIViewController {
     
     // MARK: IBOutlets
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tableView: UITableView!
     
     // MARK: Properties
     
@@ -33,7 +32,7 @@ class BeerListViewController: UIViewController {
     // MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupCollectionView()
+        self.setupTableView()
         self.setupViewModel()
         self.viewModel.fetchBeers()
     }
@@ -48,9 +47,14 @@ extension BeerListViewController {
         self.viewModel = BeerListViewModel(view: self)
     }
     
-    private func setupCollectionView() {
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
+    private func setupTableView() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        self.tableView.registerCell(BeerPagingHeaderCell.self)
+        self.tableView.registerCell(BeerListCell.self)
+        
+        self.tableView.registerHeaderFooter(BeerSegmentHeaderCell.self)
     }
     
 }
@@ -59,29 +63,46 @@ extension BeerListViewController {
 extension BeerListViewController: BeerListViewModelProtocol {
     /// Reload Data
     func reload() {
-        self.collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
     }
 }
 
 // MARK: UICollectionViewDelegate
-extension BeerListViewController: UICollectionViewDelegate {
+extension BeerListViewController: UITableViewDelegate {
     
 }
 
 // MARK: UICollectionViewDataSource
-extension BeerListViewController: UICollectionViewDataSource {
+extension BeerListViewController: UITableViewDataSource {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return self.viewModel.numberOfSections
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel.numberOfRows(inSection: section)
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let identifier = self.reuseIdentifier(at: indexPath),
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TableViewCell else {
+                return UITableViewCell()
+        }
+        cell.delegate = self
+        cell.item = self.viewModel?.item(atIndexPath: indexPath)
+        return cell
+//        return UITableViewCell()
     }
     
-    
+    private func reuseIdentifier(at indexPath: IndexPath) -> String? {
+        let item = self.viewModel?.item(atIndexPath: indexPath)
+        switch item {
+        case _ as BeerListCellModel:
+            return BeerListCell.reuseIdentifier
+        default: return nil
+        }
+    }
 }

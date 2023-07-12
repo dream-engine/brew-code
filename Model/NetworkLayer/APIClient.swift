@@ -9,6 +9,7 @@ import Foundation
 
 import Foundation
 
+// MARK: Network Error [Enum]
 /// Custom Error enum that we'll use in case
 public enum NetworkError: Error {
     case noInternet
@@ -17,6 +18,7 @@ public enum NetworkError: Error {
     case decodingError
 }
 
+// MARK: HTTP Method [Enum]
 /// An enum for various HTTPMethod. I've implemented GET and POST. I'll update the code and add the rest shortly :D
 enum HTTPMethod: String {
     case get     = "GET"
@@ -58,13 +60,14 @@ fileprivate enum URLEncoding {
     }
 }
 
+// MARK: APIRequestProtocol
 protocol APIRequestProtocol {
     static func makeRequest<S: Codable>(session: URLSession, request: URLRequest, model: S.Type, onCompletion: @escaping(S?, NetworkError?) -> ())
     static func makeGetRequest<T: Codable> (path: String, queries: Parameters, onCompletion: @escaping(T?, NetworkError?) -> ())
     static func makePostRequest<T: Codable> (path: String, body: Parameters, onCompletion: @escaping (T?, NetworkError?) -> ())
 }
 
-
+// MARK: APIRequestManager [Enum]
 enum APIRequestManager: APIRequestProtocol {
     case getAPI(path: String, data: Parameters)
     case postAPI(path: String, data: Parameters)
