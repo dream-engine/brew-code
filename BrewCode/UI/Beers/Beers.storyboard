@@ -16,7 +16,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="HhU-8T-rgN">
+                            <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yX9-Ug-KxT">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="HhU-8T-rgN">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
@@ -29,12 +33,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="HhU-8T-rgN" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="Dlr-WX-uG8"/>
+                            <constraint firstItem="yX9-Ug-KxT" firstAttribute="bottom" secondItem="HhU-8T-rgN" secondAttribute="bottom" id="PGF-1n-8qC"/>
                             <constraint firstAttribute="bottom" secondItem="HhU-8T-rgN" secondAttribute="bottom" id="Q0G-Uq-tlE"/>
                             <constraint firstItem="HhU-8T-rgN" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="S9J-Ys-1pK"/>
                             <constraint firstItem="HhU-8T-rgN" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Sww-ab-XWg"/>
+                            <constraint firstItem="yX9-Ug-KxT" firstAttribute="top" secondItem="HhU-8T-rgN" secondAttribute="top" id="YhG-fv-Vqm"/>
+                            <constraint firstItem="yX9-Ug-KxT" firstAttribute="trailing" secondItem="HhU-8T-rgN" secondAttribute="trailing" id="kXJ-TV-FTK"/>
+                            <constraint firstItem="yX9-Ug-KxT" firstAttribute="leading" secondItem="HhU-8T-rgN" secondAttribute="leading" id="nzj-NN-wF2"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="gradientView" destination="yX9-Ug-KxT" id="S4T-f1-Ul5"/>
                         <outlet property="tableView" destination="HhU-8T-rgN" id="C1o-h0-CGk"/>
                     </connections>
                 </viewController>

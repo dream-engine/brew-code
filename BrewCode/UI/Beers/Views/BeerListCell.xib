@@ -18,16 +18,17 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="REj-2L-hrX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="192"/>
+                        <rect key="frame" x="24" y="5" width="272" height="182"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nUV-Yw-61c">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nUV-Yw-61c" customClass="ImageView" customModule="BrewCode" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="TxV-tb-am8"/>
+                                    <constraint firstAttribute="height" constant="150" id="TxV-tb-am8"/>
+                                    <constraint firstAttribute="width" constant="50" id="nyD-on-UdV"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lqC-a9-3nC">
-                                <rect key="frame" x="139" y="85.666666666666671" width="42" height="21"/>
+                                <rect key="frame" x="58" y="10" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -36,25 +37,25 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="nUV-Yw-61c" firstAttribute="leading" secondItem="REj-2L-hrX" secondAttribute="leading" id="5EO-Uc-ObP"/>
-                            <constraint firstAttribute="trailing" secondItem="nUV-Yw-61c" secondAttribute="trailing" id="6Dp-Lx-N8I"/>
                             <constraint firstItem="nUV-Yw-61c" firstAttribute="top" secondItem="REj-2L-hrX" secondAttribute="top" id="6Y6-J6-1DN"/>
+                            <constraint firstItem="lqC-a9-3nC" firstAttribute="leading" secondItem="nUV-Yw-61c" secondAttribute="trailing" constant="8" id="Agb-yN-LBe"/>
+                            <constraint firstItem="lqC-a9-3nC" firstAttribute="top" secondItem="nUV-Yw-61c" secondAttribute="top" constant="10" id="D1t-gU-cO9"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nUV-Yw-61c" secondAttribute="bottom" id="HHg-7d-cKT"/>
-                            <constraint firstItem="lqC-a9-3nC" firstAttribute="centerY" secondItem="REj-2L-hrX" secondAttribute="centerY" id="YUA-Qm-Sau"/>
-                            <constraint firstItem="lqC-a9-3nC" firstAttribute="centerX" secondItem="REj-2L-hrX" secondAttribute="centerX" id="hde-lW-Rbf"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="REj-2L-hrX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="427-Dk-BbD"/>
-                    <constraint firstItem="REj-2L-hrX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="HWx-hD-1pu"/>
-                    <constraint firstAttribute="bottom" secondItem="REj-2L-hrX" secondAttribute="bottom" id="Iz8-3m-sqI"/>
-                    <constraint firstAttribute="trailing" secondItem="REj-2L-hrX" secondAttribute="trailing" id="X5T-Sg-ysv"/>
+                    <constraint firstItem="REj-2L-hrX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="427-Dk-BbD"/>
+                    <constraint firstItem="REj-2L-hrX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="HWx-hD-1pu"/>
+                    <constraint firstAttribute="bottom" secondItem="REj-2L-hrX" secondAttribute="bottom" constant="5" id="Iz8-3m-sqI"/>
+                    <constraint firstAttribute="trailing" secondItem="REj-2L-hrX" secondAttribute="trailing" constant="24" id="X5T-Sg-ysv"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="beerImageView" destination="nUV-Yw-61c" id="X8r-Sq-aXW"/>
+                <outlet property="beerImageView" destination="nUV-Yw-61c" id="Uy7-FZ-KhF"/>
                 <outlet property="beerNameLabel" destination="lqC-a9-3nC" id="ZGa-uW-fht"/>
+                <outlet property="containerView" destination="REj-2L-hrX" id="rXK-Mh-wdf"/>
             </connections>
             <point key="canvasLocation" x="30.534351145038165" y="71.83098591549296"/>
         </tableViewCell>

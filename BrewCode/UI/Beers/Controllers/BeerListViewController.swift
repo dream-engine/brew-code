@@ -22,6 +22,7 @@ class BeerListViewController: UIViewController {
     
     // MARK: IBOutlets
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var gradientView: UIView!
     
     // MARK: Properties
     
@@ -32,15 +33,27 @@ class BeerListViewController: UIViewController {
     // MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupUI()
         self.setupTableView()
         self.setupViewModel()
         self.viewModel.fetchBeers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            self.setupGradient()
+        }
     }
 
 }
 
 // MARK: Helper Functions
 extension BeerListViewController {
+    
+    private func setupUI() {
+        self.tableView.backgroundColor = .clear
+    }
     
     /// Setup View Model
     private func setupViewModel() {
@@ -55,6 +68,19 @@ extension BeerListViewController {
         self.tableView.registerCell(BeerListCell.self)
         
         self.tableView.registerHeaderFooter(BeerSegmentHeaderCell.self)
+    }
+    
+    private func setupGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor.purple.cgColor, UIColor.blue.cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.0, y: 1.0)
+        
+        gradientLayer.frame = self.gradientView.bounds
+        
+        self.gradientView.layer.insertSublayer(gradientLayer, at: 0)
     }
     
 }
@@ -93,6 +119,7 @@ extension BeerListViewController: UITableViewDataSource {
         }
         cell.delegate = self
         cell.item = self.viewModel?.item(atIndexPath: indexPath)
+        cell.selectionStyle = .none
         return cell
 //        return UITableViewCell()
     }
