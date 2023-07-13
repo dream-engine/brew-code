@@ -7,11 +7,11 @@
 
 import Foundation
 
-extension Beer {
+extension BeerResponse {
     
     /// Fetch List of beers
     /// - Parameter onCompletion: Returns List of Beers or Error
-    public static func getBeers(onCompletion: @escaping ([Beer]?, NetworkError?) -> Void) {
+    public static func getBeers(onCompletion: @escaping ([BeerResponse]?, NetworkError?) -> Void) {
         let router = BeerRouter.fetchBeerData
         APIRequestManager.makeGetRequest(path: router.path, queries: [:]) { (result, error) in
             onCompletion(result, error)

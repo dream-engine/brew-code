@@ -11,9 +11,12 @@ protocol BeerListViewControllerProtocol {
     // CollectionView Data
     func item(atIndexPath indexPath: IndexPath) -> Any
     func numberOfRows(inSection section: Int) -> Int
+    func headerItem(atSection section: Int) -> Any?
     var numberOfSections: Int { get }
     
     func fetchBeers()
+    
+    func didSelect(filter: String)
 }
 
 /// BeerListViewController
@@ -129,7 +132,24 @@ extension BeerListViewController: UITableViewDataSource {
         switch item {
         case _ as BeerListCellModel:
             return BeerListCell.reuseIdentifier
+        case _ as BeerPagingHeaderCellModel:
+            return BeerPagingHeaderCell.reuseIdentifier
         default: return nil
         }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let identifier = BeerSegmentHeaderCell.reuseIdentifier
+        guard let headerView =  tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier) as? TableHeaderFooterView else {return UIView()}
+        headerView.item = self.viewModel.headerItem(atSection: section)
+        headerView.delegate = self
+        return headerView
+    }
+}
+
+// MARK: BeerSegmentHeaderCellProtocol
+extension BeerListViewController: BeerSegmentHeaderCellProtocol {
+    func didSelect(filter: String) {
+        self.viewModel.didSelect(filter: filter)
     }
 }
