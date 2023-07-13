@@ -102,7 +102,15 @@ extension BeerListViewController: BeerListViewModelProtocol {
 
 // MARK: UICollectionViewDelegate
 extension BeerListViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let item = self.viewModel.item(atIndexPath: indexPath) as? BeerListCellModel,
+           let vc = BeerDetailViewController.newInstance {
+            vc.setupViewModel(withBeer: item.beer)
+            vc.modalPresentationStyle = .fullScreen
+            vc.popDelegate = self
+            self.showDetailViewController(vc, sender: self)
+        }
+    }
 }
 
 // MARK: UICollectionViewDataSource
@@ -160,5 +168,12 @@ extension BeerListViewController: BeerSegmentHeaderCellProtocol {
 extension BeerListViewController: BeerListCellProtocol {
     func didUpdate(favourite isFavourite: Bool, forId id: Int64) {
         self.viewModel.didUpdate(favourite: isFavourite, forId: id)
+    }
+}
+
+// MARK: BeerDetailViewControllerPopProtocol
+extension BeerListViewController: BeerDetailViewControllerPopProtocol {
+    func didPop() {
+        self.viewModel.fetchBeers()
     }
 }

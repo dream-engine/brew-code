@@ -29,6 +29,7 @@
 		E6044AC32A6003390006FD05 /* Ingredients+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6044ABB2A6003390006FD05 /* Ingredients+CoreDataProperties.swift */; };
 		E6044AC52A6010C50006FD05 /* BeerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6044AC42A6010C50006FD05 /* BeerDetailViewController.swift */; };
 		E6044AC72A6010D70006FD05 /* BeerDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6044AC62A6010D70006FD05 /* BeerDetailViewModel.swift */; };
+		E6044AC92A601ECC0006FD05 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6044AC82A601ECC0006FD05 /* Storyboard.swift */; };
 		E6C145112A5D839C008825AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C145102A5D839C008825AD /* AppDelegate.swift */; };
 		E6C145132A5D839C008825AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C145122A5D839C008825AD /* SceneDelegate.swift */; };
 		E6C1451B2A5D839C008825AD /* BrewCode.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E6C145192A5D839C008825AD /* BrewCode.xcdatamodeld */; };
@@ -131,6 +132,7 @@
 		E6044ABB2A6003390006FD05 /* Ingredients+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ingredients+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E6044AC42A6010C50006FD05 /* BeerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerDetailViewController.swift; sourceTree = "<group>"; };
 		E6044AC62A6010D70006FD05 /* BeerDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerDetailViewModel.swift; sourceTree = "<group>"; };
+		E6044AC82A601ECC0006FD05 /* Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
 		E6C1450D2A5D839C008825AD /* BrewCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6C145102A5D839C008825AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6C145122A5D839C008825AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				E6C1458A2A5EB9DD008825AD /* ImageView.swift */,
 				E6044A7F2A5EE1B10006FD05 /* UIView+BlurView.swift */,
 				E6044A812A5EE4CC0006FD05 /* UIView+Shadow.swift */,
+				E6044AC82A601ECC0006FD05 /* Storyboard.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 				E6044AC22A6003390006FD05 /* Ingredients+CoreDataClass.swift in Sources */,
 				E6044AC32A6003390006FD05 /* Ingredients+CoreDataProperties.swift in Sources */,
 				E6044AC02A6003390006FD05 /* Hop+CoreDataClass.swift in Sources */,
+				E6044AC92A601ECC0006FD05 /* Storyboard.swift in Sources */,
 				E6C145892A5E8D1C008825AD /* CollectionViewCell.swift in Sources */,
 				E6044A8D2A5FCA0F0006FD05 /* BeerSegmentCollectionCellModel.swift in Sources */,
 				E6C1456E2A5D9253008825AD /* SectionModel.swift in Sources */,
