@@ -13,11 +13,14 @@ protocol BeerListViewControllerProtocol {
     func numberOfRows(inSection section: Int) -> Int
     func headerItem(atSection section: Int) -> Any?
     var numberOfSections: Int { get }
+    var screenMode: BeerListScreenMode { get }
     
     func fetchBeers()
     
     func didSelect(filter: String)
     func didUpdate(favourite isFavourite: Bool, forId id: Int64)
+    func updateScreen(withMode mode: BeerListScreenMode)
+    func didUpdateSearch(withText text: String)
 }
 
 /// BeerListViewController
@@ -27,6 +30,11 @@ class BeerListViewController: UIViewController {
     // MARK: IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var gradientView: UIView!
+    @IBOutlet weak var favouriteButton: UIButton!
+    @IBOutlet weak var closeSearchButton: UIButton!
+    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     // MARK: Properties
     
@@ -57,6 +65,16 @@ extension BeerListViewController {
     
     private func setupUI() {
         self.tableView.backgroundColor = .clear
+        self.view.backgroundColor = .white
+        
+        self.favouriteButton.layer.cornerRadius = 6
+        self.favouriteButton.backgroundColor = .white
+        
+        self.searchButton.layer.cornerRadius = 6
+        self.searchButton.backgroundColor = .white
+        
+        self.searchBar.isHidden = true
+        self.closeSearchButton.isHidden = true
     }
     
     /// Setup View Model
@@ -89,6 +107,40 @@ extension BeerListViewController {
     
 }
 
+// MARK: IBActions
+extension BeerListViewController {
+    
+    @IBAction func favouriteButtonAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        self.viewModel.updateScreen(withMode: sender.isSelected ? .favourite : .list)
+        self.titleLabel.text = self.viewModel.screenMode.title
+    }
+    
+    @IBAction func searchButtonAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        self.favouriteButton.isSelected = false
+        self.viewModel.updateScreen(withMode: sender.isSelected ? .search : .list)
+        self.searchBar.isHidden = !sender.isSelected
+        self.closeSearchButton.isHidden = !sender.isSelected
+        if sender.isSelected {
+            self.searchBar.becomeFirstResponder()
+        }
+        self.titleLabel.text = self.viewModel.screenMode.title
+    }
+    
+    @IBAction func closeSearchButtonAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        self.searchButton.isSelected = false
+        self.viewModel.updateScreen(withMode: .list)
+        self.searchBar.isHidden = true
+        self.closeSearchButton.isHidden = true
+        self.searchBar.resignFirstResponder()
+        self.titleLabel.text = self.viewModel.screenMode.title
+        self.viewModel.didUpdateSearch(withText: "")
+        self.searchBar.text = ""
+    }
+}
+
 // MARK: BeerListViewModelProtocol
 extension BeerListViewController: BeerListViewModelProtocol {
     /// Reload Data
@@ -96,7 +148,6 @@ extension BeerListViewController: BeerListViewModelProtocol {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-        
     }
 }
 
@@ -106,7 +157,6 @@ extension BeerListViewController: UITableViewDelegate {
         if let item = self.viewModel.item(atIndexPath: indexPath) as? BeerListCellModel,
            let vc = BeerDetailViewController.newInstance {
             vc.setupViewModel(withBeer: item.beer)
-            vc.modalPresentationStyle = .fullScreen
             vc.popDelegate = self
             self.showDetailViewController(vc, sender: self)
         }
@@ -133,7 +183,6 @@ extension BeerListViewController: UITableViewDataSource {
         cell.item = self.viewModel?.item(atIndexPath: indexPath)
         cell.selectionStyle = .none
         return cell
-//        return UITableViewCell()
     }
     
     private func reuseIdentifier(at indexPath: IndexPath) -> String? {
@@ -148,11 +197,23 @@ extension BeerListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let identifier = BeerSegmentHeaderCell.reuseIdentifier
-        guard let headerView =  tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier) as? TableHeaderFooterView else {return UIView()}
-        headerView.item = self.viewModel.headerItem(atSection: section)
-        headerView.delegate = self
-        return headerView
+        if let headerModel = self.viewModel.headerItem(atSection: section) {
+            let identifier = BeerSegmentHeaderCell.reuseIdentifier
+            guard let headerView =  tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier) as? TableHeaderFooterView else {return UIView()}
+            headerView.item = headerModel
+            headerView.delegate = self
+            return headerView
+        } else {
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if self.viewModel.headerItem(atSection: section) != nil {
+            return 50
+        } else {
+            return 0
+        }
     }
 }
 
@@ -176,4 +237,22 @@ extension BeerListViewController: BeerDetailViewControllerPopProtocol {
     func didPop() {
         self.viewModel.fetchBeers()
     }
+}
+
+extension BeerListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let searchText = (searchBar.text! as NSString).replacingCharacters(in: range, with: text)
+//        self.viewModel.didUpdateSearch(withText: searchText)
+        return true
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.viewModel.didUpdateSearch(withText: searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.resignFirstResponder()
+    }
+    
+    
 }

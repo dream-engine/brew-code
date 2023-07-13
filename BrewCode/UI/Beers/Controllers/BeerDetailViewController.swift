@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: BeerDetailViewControllerPopProtocol
 protocol BeerDetailViewControllerPopProtocol: AnyObject {
     func didPop()
 }
@@ -68,12 +69,10 @@ extension BeerDetailViewController {
         
         self.closeButton.backgroundColor = .white
         self.favouriteButton.backgroundColor = .white
-        self.backgroundView.addBlur(withStyle: .prominent, andCornerRadius: 0.0)
+        self.backgroundView.addBlur(withStyle: .systemUltraThinMaterialDark, andCornerRadius: 0.0)
         
-        self.closeButton.layer.cornerRadius = 32
-        self.favouriteButton.layer.cornerRadius = 32
-        
-        self.titleLable.font = .boldSystemFont(ofSize: 20)
+        self.closeButton.layer.cornerRadius = 22
+        self.favouriteButton.layer.cornerRadius = 22
     }
     
     func setupViewModel(withBeer beer: Any) {

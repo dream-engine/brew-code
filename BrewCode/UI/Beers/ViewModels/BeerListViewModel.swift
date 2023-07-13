@@ -20,6 +20,8 @@ class BeerListViewModel {
     var sectionModels: [SectionModel] = []
     
     var beerFilter = "All"
+    var screenMode: BeerListScreenMode = .list
+    var searchText = ""
     
     // Data
     var beers: [Beer] = []
@@ -45,7 +47,9 @@ extension BeerListViewModel {
             .sorted(by: { ($0.beer.name ?? "") < ($1.beer.name ?? "") })
         
         self.sectionModels.append(SectionModel(
-            headerModel: beerSegmentHeaderModel,
+            headerModel: self.screenMode == .list
+            ? beerSegmentHeaderModel
+            : nil,
             cellModels: beerListCellModels
         ))
         
@@ -54,20 +58,63 @@ extension BeerListViewModel {
     
     func filteredBeers() -> [Beer] {
         
-        if beerFilter == "All" {
-            return self.beers
-        } else {
+        switch self.screenMode {
+        case.favourite:
             return beers.filter { beer in
-                var isAvailable = false
-                beer.ingredients?.hops?.forEach({ hop in
-                    
-                    if ((hop as? Hop)?.name ?? "") == self.beerFilter {
-                        isAvailable = true
-                    }
-                })
-                
-                return isAvailable
+                return beer.isFavourite
             }
+        case .list:
+            
+            if beerFilter == "All" {
+                return self.beers
+            } else {
+                return beers.filter { beer in
+                    var isAvailable = false
+                    beer.ingredients?.hops?.forEach({ hop in
+                        
+                        if ((hop as? Hop)?.name ?? "") == self.beerFilter {
+                            isAvailable = true
+                        }
+                    })
+                    
+                    return isAvailable
+                }
+            }
+            
+        case .search:
+            
+            if searchText.isEmpty {
+                return self.beers
+            } else {
+                return self.beers.filter({ ($0.name ?? "").localizedCaseInsensitiveContains(self.searchText) })
+            }
+//            if beerFilter == "All" {
+//                if searchText.isEmpty {
+//                    return self.beers.filter({ ($0.name ?? "").contains(self.searchText) })
+//                } else {
+//                    return self.beers.filter({ ($0.name ?? "").contains(self.searchText) })
+//                }
+//
+//            } else {
+//
+//                let tempResults = beers.filter { beer in
+//                    var isAvailable = false
+//                    beer.ingredients?.hops?.forEach({ hop in
+//
+//                        if ((hop as? Hop)?.name ?? "") == self.beerFilter {
+//                            isAvailable = true
+//                        }
+//                    })
+//
+//                    return isAvailable
+//                }
+//
+//                if self.searchText.isEmpty {
+//                    return tempResults
+//                } else {
+//                    return tempResults.filter({ ($0.name ?? "").contains(self.searchText)})
+//                }
+//            }
         }
     }
     
@@ -147,5 +194,18 @@ extension BeerListViewModel: BeerListViewControllerProtocol {
         let beer = self.beers.filter({ $0.id == id }).first
         beer?.isFavourite = isFavourite
         CoreDataManager.shared.updateFavourite(withFavourite: isFavourite, forId: id)
+        self.fetchBeers()
     }
+    
+    func updateScreen(withMode mode: BeerListScreenMode) {
+        self.screenMode = mode
+        self.prepareCellModels()
+    }
+    
+    func didUpdateSearch(withText text: String) {
+        self.searchText = text
+        self.prepareCellModels()
+    }
+    
+   
 }
