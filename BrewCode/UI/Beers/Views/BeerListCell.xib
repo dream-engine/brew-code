@@ -43,6 +43,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O5F-UN-N8L">
+                                <rect key="frame" x="228" y="0.0" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="8Kh-Ry-89b"/>
+                                    <constraint firstAttribute="height" constant="44" id="xoS-os-vnQ"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="heart" catalog="system"/>
+                                <state key="selected" image="heart.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="isFavouriteButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="OTM-2w-6GF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -53,7 +67,9 @@
                             <constraint firstItem="lqC-a9-3nC" firstAttribute="top" secondItem="nUV-Yw-61c" secondAttribute="top" constant="10" id="D1t-gU-cO9"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nUV-Yw-61c" secondAttribute="bottom" constant="10" id="HHg-7d-cKT"/>
                             <constraint firstItem="A79-Sw-DOz" firstAttribute="top" secondItem="lqC-a9-3nC" secondAttribute="bottom" constant="8" id="JB8-qx-5Gp"/>
+                            <constraint firstItem="O5F-UN-N8L" firstAttribute="top" secondItem="REj-2L-hrX" secondAttribute="top" id="VrJ-gf-NzG"/>
                             <constraint firstItem="A79-Sw-DOz" firstAttribute="leading" secondItem="nUV-Yw-61c" secondAttribute="trailing" constant="8" symbolic="YES" id="adD-th-Ntk"/>
+                            <constraint firstAttribute="trailing" secondItem="O5F-UN-N8L" secondAttribute="trailing" id="kQT-1o-Ylh"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="A79-Sw-DOz" secondAttribute="trailing" constant="10" id="ohA-hB-jzb"/>
                         </constraints>
                     </view>
@@ -75,14 +91,20 @@
                 <outlet property="beerImageView" destination="nUV-Yw-61c" id="Uy7-FZ-KhF"/>
                 <outlet property="beerNameLabel" destination="lqC-a9-3nC" id="ZGa-uW-fht"/>
                 <outlet property="containerView" destination="REj-2L-hrX" id="rXK-Mh-wdf"/>
+                <outlet property="isFavouriteButton" destination="O5F-UN-N8L" id="F6M-DB-h5g"/>
                 <outlet property="tagLineLabel" destination="A79-Sw-DOz" id="9Ro-dt-J26"/>
             </connections>
             <point key="canvasLocation" x="30.534351145038165" y="71.83098591549296"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="heart" catalog="system" width="128" height="107"/>
+        <image name="heart.fill" catalog="system" width="128" height="107"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

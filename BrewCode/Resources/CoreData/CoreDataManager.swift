@@ -127,4 +127,24 @@ class CoreDataManager {
         
         return storedData
     }
+    
+    func updateFavourite(withFavourite isFavourite: Bool, forId id: Int64) {
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Beer")
+        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(id)")
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            if let requiredBeer = results.first as? Beer {
+                requiredBeer.isFavourite = isFavourite
+            }
+            
+            try context.save()
+            
+            print("Updated Favourite for \(id): \(isFavourite)")
+            
+        } catch {
+            print("Couldn't fetch from CoreData ", error.localizedDescription)
+        }
+    }
 }

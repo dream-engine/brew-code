@@ -142,4 +142,10 @@ extension BeerListViewModel: BeerListViewControllerProtocol {
         self.beerFilter = filter
         self.prepareCellModels()
     }
+    
+    func didUpdate(favourite isFavourite: Bool, forId id: Int64) {
+        let beer = self.beers.filter({ $0.id == id }).first
+        beer?.isFavourite = isFavourite
+        CoreDataManager.shared.updateFavourite(withFavourite: isFavourite, forId: id)
+    }
 }

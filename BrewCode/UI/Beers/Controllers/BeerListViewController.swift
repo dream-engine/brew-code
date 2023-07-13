@@ -17,6 +17,7 @@ protocol BeerListViewControllerProtocol {
     func fetchBeers()
     
     func didSelect(filter: String)
+    func didUpdate(favourite isFavourite: Bool, forId id: Int64)
 }
 
 /// BeerListViewController
@@ -151,5 +152,13 @@ extension BeerListViewController: UITableViewDataSource {
 extension BeerListViewController: BeerSegmentHeaderCellProtocol {
     func didSelect(filter: String) {
         self.viewModel.didSelect(filter: filter)
+    }
+}
+
+
+// MARK: BeerListCellProtocol
+extension BeerListViewController: BeerListCellProtocol {
+    func didUpdate(favourite isFavourite: Bool, forId id: Int64) {
+        self.viewModel.didUpdate(favourite: isFavourite, forId: id)
     }
 }

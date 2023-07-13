@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol BeerListCellProtocol: AnyObject {
+    func didUpdate(favourite isFavourite: Bool, forId id: Int64)
+}
+
 class BeerListCell: TableViewCell {
     
     @IBOutlet weak var beerImageView: ImageView!
@@ -14,6 +18,7 @@ class BeerListCell: TableViewCell {
     @IBOutlet weak var tagLineLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var backgroundBlurView: UIView!
+    @IBOutlet weak var isFavouriteButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,7 +32,6 @@ class BeerListCell: TableViewCell {
     
     override func layoutIfNeeded() {
         super.layoutIfNeeded()
-//        self.setupGradient()
     }
     
     private func setupUI() {
@@ -49,9 +53,10 @@ class BeerListCell: TableViewCell {
     
     override func configure(_ item: Any?) {
         if let item = self.item as? BeerListCellModel {
-            self.beerNameLabel.text = item.beer.name
-            self.tagLineLabel.text = item.beer.tagline
-            if let urlString = item.beer.imageUrl,
+            self.beerNameLabel.text = item.name
+            self.tagLineLabel.text = item.tagline
+            self.isFavouriteButton.isSelected = item.isFavourite
+            if let urlString = item.imageUrlString,
                let url = URL(string: urlString) {
                 self.beerImageView
                     .setImageFromUrl(
@@ -62,17 +67,14 @@ class BeerListCell: TableViewCell {
         }
     }
     
-    private func setupGradient() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [UIColor.blue.cgColor, UIColor.red.cgColor]
-        gradientLayer.locations = [0.0, 1.0]
+    @IBAction func isFavouriteButtonAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
         
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
-        
-        gradientLayer.frame = self.bounds
-        
-        self.layer.insertSublayer(gradientLayer, at: 0)
+        if let delegate = self.delegate as? BeerListCellProtocol,
+           let item = self.item as? BeerListCellModel {
+            delegate.didUpdate(favourite: sender.isSelected, forId: item.beer.id)
+            item.beer.isFavourite = sender.isSelected
+        }
     }
     
 }

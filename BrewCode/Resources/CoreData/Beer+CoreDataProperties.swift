@@ -23,6 +23,7 @@ extension Beer {
     @NSManaged public var contributedBy: String?
     @NSManaged public var imageUrl: String?
     @NSManaged public var brewersTips: String?
+    @NSManaged public var isFavourite: Bool
     @NSManaged public var ingredients: Ingredients?
 
 }
