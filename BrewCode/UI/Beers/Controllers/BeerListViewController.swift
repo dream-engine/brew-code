@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol BeerListViewControllerProtocol {
+protocol BeerListViewControllerProtocol: AnyObject {
     // CollectionView Data
     func item(atIndexPath indexPath: IndexPath) -> Any
     func numberOfRows(inSection section: Int) -> Int
@@ -35,20 +35,25 @@ class BeerListViewController: UIViewController {
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var noDataView: UIView!
+    @IBOutlet weak var noDataImage: UIImageView!
     
     // MARK: Properties
     
     /// ViewModel
     /// For data fetching and processing
     var viewModel: BeerListViewControllerProtocol!
+    let refreshControl = UIRefreshControl()
 
     // MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
         self.setupTableView()
+        self.setupPullToRefresh()
         self.setupViewModel()
         self.viewModel.fetchBeers()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,6 +80,8 @@ extension BeerListViewController {
         
         self.searchBar.isHidden = true
         self.closeSearchButton.isHidden = true
+        
+        self.showNoDataView(withBool: false)
     }
     
     /// Setup View Model
@@ -103,6 +110,17 @@ extension BeerListViewController {
         gradientLayer.frame = self.gradientView.bounds
         
         self.gradientView.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    private func setupPullToRefresh() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        self.viewModel.fetchBeers()
+        refreshControl.endRefreshing()
     }
     
 }
@@ -149,9 +167,29 @@ extension BeerListViewController: BeerListViewModelProtocol {
             self.tableView.reloadData()
         }
     }
+    
+    func showNoDataView(withBool show: Bool) {
+        DispatchQueue.main.async {
+            self.noDataView.isHidden = !show
+            self.searchButton.isHidden = show
+            self.favouriteButton.isHidden = show
+            self.noDataImage.image = UIImage(systemName: self.viewModel.screenMode.emptyDataImageName)
+            switch self.viewModel.screenMode {
+            case .list:
+                ()
+            case .favourite:
+                self.searchButton.isHidden = false
+                self.favouriteButton.isHidden = false
+            case .search:
+                self.searchButton.isHidden = false
+                self.favouriteButton.isHidden = true
+                
+            }
+        }
+    }
 }
 
-// MARK: UICollectionViewDelegate
+// MARK: UITableViewDelegate
 extension BeerListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let item = self.viewModel.item(atIndexPath: indexPath) as? BeerListCellModel,
@@ -163,7 +201,7 @@ extension BeerListViewController: UITableViewDelegate {
     }
 }
 
-// MARK: UICollectionViewDataSource
+// MARK: UITableViewDataSource
 extension BeerListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -241,8 +279,6 @@ extension BeerListViewController: BeerDetailViewControllerPopProtocol {
 
 extension BeerListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let searchText = (searchBar.text! as NSString).replacingCharacters(in: range, with: text)
-//        self.viewModel.didUpdateSearch(withText: searchText)
         return true
     }
     

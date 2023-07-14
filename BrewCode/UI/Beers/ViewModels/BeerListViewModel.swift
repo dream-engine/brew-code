@@ -9,8 +9,9 @@ import Foundation
 import Model
 
 // MARK: BeerListViewModelProtocol
-protocol BeerListViewModelProtocol: AnyObject {
+protocol BeerListViewModelProtocol: BaseViewModelPresenter {
     func reload()
+    func showNoDataView(withBool show: Bool)
 }
 
 // MARK: BeerListViewModel
@@ -30,14 +31,13 @@ class BeerListViewModel {
     
     init(view: BeerListViewModelProtocol) {
         self.view = view
-        
     }
 }
 
 // MARK: Helper Functions
 extension BeerListViewModel {
     private func prepareCellModels() {
-        print(self.beers)
+        
         self.sectionModels = []
         
         let beerSegmentHeaderModel = BeerSegmentHeaderCellModel(cellModels: self.getFilterData())
@@ -45,6 +45,14 @@ extension BeerListViewModel {
         let beerListCellModels = self.filteredBeers()
             .map({ BeerListCellModel(beer: $0)})
             .sorted(by: { ($0.beer.name ?? "") < ($1.beer.name ?? "") })
+        
+        guard !beerListCellModels.isEmpty else {
+            self.view?.showNoDataView(withBool: true)
+            self.sectionModels = []
+            self.view?.reload()
+            return
+        }
+        self.view?.showNoDataView(withBool: false)
         
         self.sectionModels.append(SectionModel(
             headerModel: self.screenMode == .list
@@ -88,33 +96,6 @@ extension BeerListViewModel {
             } else {
                 return self.beers.filter({ ($0.name ?? "").localizedCaseInsensitiveContains(self.searchText) })
             }
-//            if beerFilter == "All" {
-//                if searchText.isEmpty {
-//                    return self.beers.filter({ ($0.name ?? "").contains(self.searchText) })
-//                } else {
-//                    return self.beers.filter({ ($0.name ?? "").contains(self.searchText) })
-//                }
-//
-//            } else {
-//
-//                let tempResults = beers.filter { beer in
-//                    var isAvailable = false
-//                    beer.ingredients?.hops?.forEach({ hop in
-//
-//                        if ((hop as? Hop)?.name ?? "") == self.beerFilter {
-//                            isAvailable = true
-//                        }
-//                    })
-//
-//                    return isAvailable
-//                }
-//
-//                if self.searchText.isEmpty {
-//                    return tempResults
-//                } else {
-//                    return tempResults.filter({ ($0.name ?? "").contains(self.searchText)})
-//                }
-//            }
         }
     }
     
@@ -151,6 +132,13 @@ extension BeerListViewModel: BeerListViewControllerProtocol {
         self.beers = CoreDataManager.shared.fetchBeers()
         self.updateFilterSet()
         self.prepareCellModels()
+        
+        guard NetworkMonitor.shared.isConnected else {
+            print("Not connected to internet")
+            self.view?.showNoInternetToast(withMessage: "Network not available!")
+            return
+        }
+        self.view?.hideNoInternetToast()
         BeerResponse.getBeers { [weak self] (beersResponse, error) in
             guard let self = self else { return }
             
@@ -163,6 +151,14 @@ extension BeerListViewModel: BeerListViewControllerProtocol {
                         self.updateFilterSet()
                         self.prepareCellModels()
                         print("Updating data using Core data")
+                    }
+                }
+            } else {
+                if let error {
+                    switch error {
+                    case .noInternet:
+                        self.view?.showNoInternetToast(withMessage: error.errorMessage)
+                    default: ()
                     }
                 }
             }

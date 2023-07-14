@@ -20,4 +20,15 @@ enum BeerListScreenMode {
             return ""
         }
     }
+    
+    var emptyDataImageName: String {
+        switch self {
+        case .favourite:
+            return "heart.slash"
+        case .list:
+            return "xmark.icloud"
+        case .search:
+            return "magnifyingglass"
+        }
+    }
 }

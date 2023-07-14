@@ -16,6 +16,19 @@ public enum NetworkError: Error {
     case apiFailure
     case invalidResponse
     case decodingError
+    
+    public var errorMessage: String {
+        switch self {
+        case .noInternet:
+            return "Network Disconnected"
+        case .apiFailure:
+            return "Error in fetching data from server"
+        case .invalidResponse:
+            return "Response is not in correct format"
+        case .decodingError:
+            return "Error in decoding response"
+        }
+    }
 }
 
 // MARK: HTTP Method [Enum]

@@ -40,7 +40,7 @@ class BeerSegmentHeaderCell: TableHeaderFooterView {
 extension BeerSegmentHeaderCell {
     
     private func setupUI() {
-        self.backgroundColor = .clear
+        self.backgroundConfiguration?.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
         self.collectionView.backgroundColor = .clear
         self.containerView.backgroundColor = .clear
