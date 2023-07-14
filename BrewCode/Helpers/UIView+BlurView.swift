@@ -8,6 +8,10 @@
 import UIKit
 
 extension UIView {
+    /// Add Blur to View
+    /// - Parameters:
+    ///   - style: Blur Style
+    ///   - cornerRadius: Corner Radius of view on which blue is applied 
     func addBlur(withStyle style: UIBlurEffect.Style, andCornerRadius cornerRadius: Double) {
         let blurEffect = UIBlurEffect(style: style)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)

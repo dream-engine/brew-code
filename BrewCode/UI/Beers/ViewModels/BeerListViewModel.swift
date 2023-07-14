@@ -150,7 +150,6 @@ extension BeerListViewModel: BeerListViewControllerProtocol {
                         self.beers = CoreDataManager.shared.fetchBeers()
                         self.updateFilterSet()
                         self.prepareCellModels()
-                        print("Updating data using Core data")
                     }
                 }
             } else {

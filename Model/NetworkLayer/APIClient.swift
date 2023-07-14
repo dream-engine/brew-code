@@ -85,7 +85,7 @@ enum APIRequestManager: APIRequestProtocol {
     case getAPI(path: String, data: Parameters)
     case postAPI(path: String, data: Parameters)
     
-    static var baseURL: URL = URL(string: "https://api.punkapi.com/v2/")!
+    static var baseURL: URL = URL(string: APIConfig.baseUrl)!
     
     private var path: String {
         switch self {

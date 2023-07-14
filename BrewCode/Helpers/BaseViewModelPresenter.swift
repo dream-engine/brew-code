@@ -7,12 +7,15 @@
 
 import UIKit
 
+// MARK: BaseViewModelPresenter
 protocol BaseViewModelPresenter: AnyObject {
     func showNoInternetToast(withMessage message: String)
     func hideNoInternetToast()
 }
 
 extension UIViewController: BaseViewModelPresenter {
+    /// Show No Internet Toast if not already present
+    /// - Parameter message: Message string to show on toast
     func showNoInternetToast(withMessage message: String) {
         
         guard self.view.subviews.filter({ $0.accessibilityIdentifier == "Toast" }).isEmpty else { return }
@@ -28,6 +31,8 @@ extension UIViewController: BaseViewModelPresenter {
         self.view.addSubview(toastLabel)
     }
     
+    
+    /// Hide No internet toast
     func hideNoInternetToast() {
         for subview in self.view.subviews where subview.accessibilityIdentifier == "Toast" {
             subview.removeFromSuperview()

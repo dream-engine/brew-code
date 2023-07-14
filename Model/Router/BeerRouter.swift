@@ -10,7 +10,6 @@ import Foundation
 enum BeerRouter {
     case fetchBeerData
     
-    
     var path: String {
         switch self {
         case .fetchBeerData:

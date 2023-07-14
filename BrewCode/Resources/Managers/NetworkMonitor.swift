@@ -1,5 +1,5 @@
 //
-//  NetworkManager.swift
+//  NetworkMonitor.swift
 //  BrewCode
 //
 //  Created by Mohit Kumar Singh on 14/07/23.
@@ -8,10 +8,8 @@
 import Foundation
 import Network
 
-protocol NetworkMonitorProtocol: AnyObject {
-    func didUpdateNetworkStatus(with connected: Bool)
-}
-
+// MARK: NetworkMonitor
+/// NetworkMonitor: Singleton class for internet connectivity check
 class NetworkMonitor {
     static let shared = NetworkMonitor()
 
@@ -31,9 +29,10 @@ class NetworkMonitor {
     
     private init() {
         monitor = NWPathMonitor()
-        
     }
     
+    /// Start monitoring
+    /// Called from AppDelegate
     public func startMonitoring() {
         monitor.start(queue: queue)
         monitor.pathUpdateHandler = { [weak self] path in
@@ -42,6 +41,7 @@ class NetworkMonitor {
         }
     }
     
+    /// Stop Monitoring
     public func stopMonitoring() {
         monitor.cancel()
     }

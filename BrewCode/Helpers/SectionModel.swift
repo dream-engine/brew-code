@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// SectionModel
+/// For table view heterogenous section data
 class SectionModel {
     var headerModel: Any?
     var cellModels: [Any]

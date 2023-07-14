@@ -93,9 +93,7 @@ extension BeerListViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        self.tableView.registerCell(BeerPagingHeaderCell.self)
         self.tableView.registerCell(BeerListCell.self)
-        
         self.tableView.registerHeaderFooter(BeerSegmentHeaderCell.self)
     }
     
@@ -228,8 +226,6 @@ extension BeerListViewController: UITableViewDataSource {
         switch item {
         case _ as BeerListCellModel:
             return BeerListCell.reuseIdentifier
-        case _ as BeerPagingHeaderCellModel:
-            return BeerPagingHeaderCell.reuseIdentifier
         default: return nil
         }
     }
@@ -277,6 +273,7 @@ extension BeerListViewController: BeerDetailViewControllerPopProtocol {
     }
 }
 
+// MARK: UISearchBarDelegate
 extension BeerListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         return true

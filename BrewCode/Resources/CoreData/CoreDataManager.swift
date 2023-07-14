@@ -12,33 +12,14 @@ import Model
 class CoreDataManager {
     static let shared = CoreDataManager()
     
-//    let context = persistentContainer.viewContext
-    
     private init() {}
     
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-        */
         let container = NSPersistentContainer(name: "BrewCode")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
@@ -53,8 +34,6 @@ class CoreDataManager {
             do {
                 try context.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
@@ -71,7 +50,10 @@ class CoreDataManager {
                 // Beer
                 let beer = NSEntityDescription.insertNewObject(forEntityName: "Beer", into: context) as! Beer
                 
+                // Ingredients
                 let ingredients = NSEntityDescription.insertNewObject(forEntityName: "Ingredients", into: context) as! Ingredients
+                
+                // Hops Set
                 var hopData = Set<Hop>()
                 beerEntity.ingredients.hops.forEach { hopEntity in
                     let hop = NSEntityDescription.insertNewObject(forEntityName: "Hop", into: context) as! Hop
@@ -81,6 +63,7 @@ class CoreDataManager {
                     hopData.insert(hop)
                 }
                 
+                // Malts Set
                 var maltData = Set<Malt>()
                 beerEntity.ingredients.malt.forEach { maltEntity in
                     let malt = NSEntityDescription.insertNewObject(forEntityName: "Malt", into: context) as! Malt
@@ -114,6 +97,8 @@ class CoreDataManager {
         completion(didUpdateData)
     }
     
+    /// Fetch Beer Objects from CoreData
+    /// - Returns: Array of Beer
     func fetchBeers() -> [Beer] {
         let context = persistentContainer.viewContext
         // Fetch already saved data
@@ -128,6 +113,10 @@ class CoreDataManager {
         return storedData
     }
     
+    /// Update Favourite in CoreData
+    /// - Parameters:
+    ///   - isFavourite: Bool
+    ///   - id: Id of Beer Entity
     func updateFavourite(withFavourite isFavourite: Bool, forId id: Int64) {
         let context = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Beer")
@@ -140,9 +129,6 @@ class CoreDataManager {
             }
             
             try context.save()
-            
-            print("Updated Favourite for \(id): \(isFavourite)")
-            
         } catch {
             print("Couldn't fetch from CoreData ", error.localizedDescription)
         }
