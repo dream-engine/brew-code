@@ -34,6 +34,10 @@
 		E6044ACF2A61176C0006FD05 /* BaseViewModelPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6044ACE2A61176C0006FD05 /* BaseViewModelPresenter.swift */; };
 		E6044AD22A6119F90006FD05 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6044AD12A6119F90006FD05 /* NetworkMonitor.swift */; };
 		E6044AD42A613B3F0006FD05 /* APIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6044AD32A613B3F0006FD05 /* APIConfig.swift */; };
+		E6351E9F2A6C37DF00809290 /* BeerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6351E9E2A6C37DF00809290 /* BeerListView.swift */; };
+		E6351EA12A6C40E500809290 /* BeerListViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6351EA02A6C40E500809290 /* BeerListViewModel2.swift */; };
+		E6351EA32A6C444700809290 /* SwiftUIInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6351EA22A6C444700809290 /* SwiftUIInitialViewController.swift */; };
+		E6351EA52A6C44EA00809290 /* BeerListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6351EA42A6C44EA00809290 /* BeerListCellView.swift */; };
 		E6C145112A5D839C008825AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C145102A5D839C008825AD /* AppDelegate.swift */; };
 		E6C145132A5D839C008825AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C145122A5D839C008825AD /* SceneDelegate.swift */; };
 		E6C1451B2A5D839C008825AD /* BrewCode.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E6C145192A5D839C008825AD /* BrewCode.xcdatamodeld */; };
@@ -139,6 +143,10 @@
 		E6044ACE2A61176C0006FD05 /* BaseViewModelPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModelPresenter.swift; sourceTree = "<group>"; };
 		E6044AD12A6119F90006FD05 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		E6044AD32A613B3F0006FD05 /* APIConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfig.swift; sourceTree = "<group>"; };
+		E6351E9E2A6C37DF00809290 /* BeerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerListView.swift; sourceTree = "<group>"; };
+		E6351EA02A6C40E500809290 /* BeerListViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerListViewModel2.swift; sourceTree = "<group>"; };
+		E6351EA22A6C444700809290 /* SwiftUIInitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIInitialViewController.swift; sourceTree = "<group>"; };
+		E6351EA42A6C44EA00809290 /* BeerListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerListCellView.swift; sourceTree = "<group>"; };
 		E6C1450D2A5D839C008825AD /* BrewCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6C145102A5D839C008825AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6C145122A5D839C008825AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -269,6 +277,15 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		E6351E9B2A6C37B800809290 /* SwiftUIView */ = {
+			isa = PBXGroup;
+			children = (
+				E6351E9E2A6C37DF00809290 /* BeerListView.swift */,
+				E6351EA42A6C44EA00809290 /* BeerListCellView.swift */,
+			);
+			path = SwiftUIView;
+			sourceTree = "<group>";
+		};
 		E6C145042A5D839C008825AD = {
 			isa = PBXGroup;
 			children = (
@@ -383,6 +400,7 @@
 		E6C145612A5D8951008825AD /* Beers */ = {
 			isa = PBXGroup;
 			children = (
+				E6351E9B2A6C37B800809290 /* SwiftUIView */,
 				E6C145652A5D8981008825AD /* Controllers */,
 				E6C145642A5D8978008825AD /* ViewModels */,
 				E6C145632A5D8972008825AD /* CellModels */,
@@ -421,6 +439,7 @@
 			children = (
 				E6C1456B2A5D9210008825AD /* BeerListViewModel.swift */,
 				E6044AC62A6010D70006FD05 /* BeerDetailViewModel.swift */,
+				E6351EA02A6C40E500809290 /* BeerListViewModel2.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -430,6 +449,7 @@
 			children = (
 				E6C145692A5D9202008825AD /* BeerListViewController.swift */,
 				E6044AC42A6010C50006FD05 /* BeerDetailViewController.swift */,
+				E6351EA22A6C444700809290 /* SwiftUIInitialViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -792,6 +812,7 @@
 				E6C145852A5E8CED008825AD /* UIReusability.swift in Sources */,
 				E6044AC72A6010D70006FD05 /* BeerDetailViewModel.swift in Sources */,
 				E6C145112A5D839C008825AD /* AppDelegate.swift in Sources */,
+				E6351E9F2A6C37DF00809290 /* BeerListView.swift in Sources */,
 				E6044A882A5FC92A0006FD05 /* BeerSegmentCollectionCell.swift in Sources */,
 				E6044ABD2A6003390006FD05 /* Beer+CoreDataProperties.swift in Sources */,
 				E6044ACF2A61176C0006FD05 /* BaseViewModelPresenter.swift in Sources */,
@@ -803,9 +824,12 @@
 				E6044ACB2A6056BA0006FD05 /* BeerListScreenMode.swift in Sources */,
 				E6044A822A5EE4CC0006FD05 /* UIView+Shadow.swift in Sources */,
 				E6044AC22A6003390006FD05 /* Ingredients+CoreDataClass.swift in Sources */,
+				E6351EA32A6C444700809290 /* SwiftUIInitialViewController.swift in Sources */,
 				E6044AC32A6003390006FD05 /* Ingredients+CoreDataProperties.swift in Sources */,
 				E6044AC02A6003390006FD05 /* Hop+CoreDataClass.swift in Sources */,
+				E6351EA12A6C40E500809290 /* BeerListViewModel2.swift in Sources */,
 				E6044AC92A601ECC0006FD05 /* Storyboard.swift in Sources */,
+				E6351EA52A6C44EA00809290 /* BeerListCellView.swift in Sources */,
 				E6C145892A5E8D1C008825AD /* CollectionViewCell.swift in Sources */,
 				E6044A8D2A5FCA0F0006FD05 /* BeerSegmentCollectionCellModel.swift in Sources */,
 				E6C1456E2A5D9253008825AD /* SectionModel.swift in Sources */,
