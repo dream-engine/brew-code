@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Beer" representedClassName="Beer" syncable="YES">
+        <attribute name="brewersTips" optional="YES" attributeType="String"/>
+        <attribute name="contributedBy" optional="YES" attributeType="String"/>
+        <attribute name="descript" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String"/>
+        <attribute name="isFavourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="tagline" optional="YES" attributeType="String"/>
+        <relationship name="ingredients" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredients"/>
+    </entity>
+    <entity name="Hop" representedClassName="Hop" syncable="YES">
+        <attribute name="add" optional="YES" attributeType="String"/>
+        <attribute name="attribute" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Ingredients" representedClassName="Ingredients" syncable="YES">
+        <attribute name="yeast" optional="YES" attributeType="String"/>
+        <relationship name="hops" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Hop"/>
+        <relationship name="malt" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Malt"/>
+    </entity>
+    <entity name="Malt" representedClassName="Malt" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+</model>
